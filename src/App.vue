@@ -1,13 +1,15 @@
 <template>
   <div id="app">
     <img class="app_logo" src="./assets/logo.png">
-    <hello></hello>
+    <hello @start="next"></hello>
     <question v-for="question in questions" 
               :answerOne=question.answerOne
               :answerTwo=question.answerTwo
               :true=question.true
               :img=question.img
-              show="true"></question>
+              :show="question.show"
+              @wrong="pushAnswer"
+              @next="next"></question>
   </div>
 </template>
 
@@ -19,27 +21,29 @@ export default {
   name: 'app',
   data() {
     return {
+      counter: 0,
+      wrong: 0,
       questions: [
         {
           answerOne: 'Сочи, Россия',
           answerTwo: 'Торро, Испания',
           true: 1,
           img: '1',
-          show: true,
+          show: false,
         },
         {
           answerOne: 'Крым, Россия',
           answerTwo: 'Кентуки',
           true: 1,
           img: '2',
-          show: true,
+          show: false,
         },
         {
           answerOne: 'Барселона, Испания',
           answerTwo: 'Аляска, Россия',
           true: 2,
           img: '3',
-          show: true,
+          show: false,
         },
       ],
     };
@@ -47,6 +51,19 @@ export default {
   components: {
     Hello,
     Question,
+  },
+  methods: {
+    pushAnswer() {
+      this.wrong = this.wrong + 1;
+    },
+    next() {
+      if (this.counter >= this.questions.length) {
+        console.log(this.questions.length - this.wrong, '/', this.questions.length);
+        return;
+      }
+      this.questions[this.counter].show = true;
+      this.counter = this.counter + 1;
+    },
   },
 };
 </script>

@@ -10,10 +10,9 @@
               :img=question.img
               :show="question.show"
               :key="question.id"
-              @wrong="pushAnswer"
+              @right="pushAnswer"
               @next="next"></question>
-    <done v-if="this.done"
-          :title="winnerTitle"
+    <done :title="winnerTitle"
           :text="winnerText"
           :right="right"
           :length="this.questions.length"></done>
@@ -30,7 +29,6 @@ export default {
   data() {
     return {
       counter: 0,
-      wrong: 0,
       right: 0,
       done: false,
       started: false,
@@ -139,14 +137,13 @@ export default {
       }
     },
     pushAnswer() {
-      this.wrong = this.wrong + 1;
+      this.right = this.right + 1;
     },
     next() {
       this.started = true;
       if (this.counter >= this.questions.length) {
         this.done = true;
         this.questions[this.counter - 1].show = false;
-        this.right = this.questions.length - this.wrong;
         this.setWinnerText();
         return;
       }

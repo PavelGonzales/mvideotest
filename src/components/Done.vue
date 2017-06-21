@@ -6,9 +6,9 @@
         p {{ this.text }}
         span {{ this.right }} / {{ this.length }}
         .social_buttons
-          button(@click="share.fb()") fb
-          button(@click="share.vk()") vk    
-          button(@click="share.ok()") ok      
+          button(@click="fb('URL','TITLE','IMG_PATH','DESC')") fb
+          button(@click="vk('URL','TITLE','https://media.licdn.com/media/p/8/000/1e9/0e5/26e178f.png','DESC')") vk    
+          button(@click="ok('URL','DESC')") ok      
 </template>
 
 <script>
@@ -22,16 +22,24 @@ export default {
     'text',
   ],
   methods: {
-    share: {
-      fb() {
-        console.log('share fb');
-      },
-      vk() {
-        console.log('share vk');
-      },
-      ok() {
-        console.log('share ok');
-      },
+    fb() {
+      console.log('share fb');
+    },
+    vk(purl, ptitle, pimg, text) {
+      let url = 'http://vkontakte.ru/share.php?';
+      url += `url=${encodeURIComponent(purl)}`;
+      url += `&title=${encodeURIComponent(ptitle)}`;
+      url += `&description=${encodeURIComponent(text)}`;
+      url += `&image=${encodeURIComponent(pimg)}`;
+      url += '&noparse=true';
+      this.popup(url);
+      console.log('share vk');
+    },
+    ok() {
+      console.log('share ok');
+    },
+    popup(url) {
+      window.open(url, '', 'toolbar=0,status=0,width=626,height=436');
     },
   },
 };

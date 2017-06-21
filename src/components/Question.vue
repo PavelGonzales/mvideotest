@@ -26,13 +26,8 @@ export default {
   ],
   methods: {
     reply(answer) {
-      if (answer === 1 && this.true === 1) {
-        console.log('Правильный ответ: ', this.answerOne);
-      } else if (answer === 2 && this.true === 2) {
-        console.log('Правильный ответ: ', this.answerTwo);
-      } else {
-        console.log('А вот и не правильно, лох');
-        this.$emit('wrong');
+      if (((answer === 1 && this.true === 1) || (answer === 2 && this.true === 2))) {
+        this.$emit('right');
       }
       this.$emit('next');
     },
